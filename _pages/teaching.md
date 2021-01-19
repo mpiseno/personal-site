@@ -2,10 +2,30 @@
 layout: page
 permalink: /teaching/
 title: teaching
-description: Materials for courses you taught. Replace this text with your description.
+description: Information and materials for CS 7643 Deep Learning
 nav: true
 ---
 
-For now, this page is assumed to be a static description of your courses. You can convert it to a collection similar to `_projects/` so that you can have a dedicated page for each course.
+---
 
-Organize your courses by years, topics, or universities, however you like!
+#### Courses Taught
+
+**Sping 2021:** CS 7643: Deep Learning
+
+**Fall 2020:** CS 7643: Deep Learning
+
+**Fall 2019:** CS 7643: Deep Learning
+
+**Spring 2019:** CS 7641: Machine Learning
+
+---
+
+#### Materials
+
+Supplementary Course Materials:
+* [Personal deep learning blog](/blog)
+* [Deep Learning textbook](https://www.deeplearningbook.org/)
+
+Prerequisite Refreshers:
+* [Matrix Calculus](https://explained.ai/matrix-calculus/index.html)
+* [Convex Optimization](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-079-introduction-to-convex-optimization-fall-2009/lecture-notes/)

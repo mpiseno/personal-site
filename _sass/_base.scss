@@ -264,6 +264,15 @@ footer.sticky-bottom {
   }
 }
 
+.post-img {
+    display: flex;
+    justify-content: center;
+}
+
+.post-img img {
+    max-width: 80%;
+}
+
 
 // Distill
 
@@ -291,6 +300,48 @@ footer.sticky-bottom {
   }
   .card img {
     width: 100%;
+  }
+}
+
+// Experience
+
+.experiences {
+  ol.explist {
+    list-style: none;
+    padding: 0;
+    margin-top: 0;
+
+    li {
+      margin-top: 1rem;
+      border-top: 1px solid #e8e8e8;
+      padding-top: 1rem;
+      box-sizing: border-box;
+
+      img {
+        height: 60px; float: left;
+      }
+
+      h4.year {
+        float: right; color: #e8e8e8;
+      }
+
+      .expinfo {
+        height: 60px; display: table-cell; vertical-align: middle; padding-left: 20px;
+      }
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }
+  a .expdesc {
+    color: #828282;
+  }
+  a .exptitle {
+    color: black; font-weight: bolder;
+  }
+  a :hover .exptitle {
+    color: #CFB53B;
   }
 }
 

@@ -2,23 +2,28 @@
 layout: about
 title: about
 permalink: /
-description: <a href="#">Affiliations</a>. Address. Contacts. Moto. Etc.
+description: <b>Quick Links:</b> <a href="/assets/pdf/Michael-Piseno-Resume.pdf">CV</a>
 
 profile:
   align: right
   image: prof_pic.jpg
   address: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
 
 news: true  # includes a list of news items
-selected_papers: true # includes a list of papers marked as "selected={true}"
+selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com){:target="\_blank"}. You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+###### <b>About Me</b>
 
-Put your address / P.O. box / other info right below your picture. You can also disable any these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+I am a 5th year undergraduate student at [Georgia Tech](https://www.gatech.edu/) studying Computer Science and Mathematics. I am broadly interested in AI and Robotics that interact with humans and other intelligent agents. I am also passionate about the startup landscape and education. On campus, I am a teaching assistant for [CS 7643: Deep Learning](https://www.cc.gatech.edu/classes/AY2021/cs7643_fall/), a Senior Class Representative in student government, and a member of the board of directors in [SHPE](https://gt-shpe.com/).
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](http://fortawesome.github.io/Font-Awesome/){:target="\_blank"} and [Academicons](https://jpswalsh.github.io/academicons/){:target="\_blank"}, like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+###### <b>Research Interests</b>
+
+I am interested in developing AI that interacts collaboratively with both humans and other intelligent agents and transferring these systems to real robots. More specificically, I am interested in modeling multi-agent systems that can operate in dynamic and stochastic real-world environments. This lands me at the intersection of multi-agent RL and robotics.
+
+###### <b>Personal Interests</b>
+
+I am passionate about education in low-income communities because I grew up on the south side of Atlanta where educational opportunities were comparatively deficient. I founded [Fractal](https://www.fractalcs.org/), a nonprofit dedicated to promoting CS education in low-income communities.
+
+In my free time, I love snowboarding and learning languages. I speak Chinese (Mandarin) and Spanish conversationally.
