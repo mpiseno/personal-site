@@ -16,7 +16,7 @@ social: true  # includes social icons at the bottom of the page
 
 ###### <b>About Me</b>
 
-I am a 5th year undergraduate student at [Georgia Tech](https://www.gatech.edu/) studying Computer Science and Mathematics. I am broadly interested in AI and Robotics that interact with humans and other intelligent agents. I am also passionate about the startup landscape and education. On campus, I am a teaching assistant for [CS 7643: Deep Learning](https://www.cc.gatech.edu/classes/AY2021/cs7643_fall/), a Senior Class Representative in student government, and a member of the board of directors in [SHPE](https://gt-shpe.com/).
+I am a 5th year undergraduate student at [Georgia Tech](https://www.gatech.edu/) studying Computer Science and Mathematics. I am broadly interested in AI and robots that interact with humans and other intelligent agents. I am also passionate about the startup landscape and education. On campus, I am a teaching assistant for [CS 7643: Deep Learning](https://www.cc.gatech.edu/classes/AY2021/cs7643_fall/), a Senior Class Representative in student government, and a member of the board of directors in [SHPE](https://gt-shpe.com/).
 
 ###### <b>Research Interests</b>
 

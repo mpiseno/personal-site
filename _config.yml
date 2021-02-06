@@ -64,7 +64,7 @@ panelbear_analytics: XXXXXXXXX # panelbear analytics site ID
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: My Deep Learning Blog  # your blog must have a name for it to show up in the nav bar
+blog_name: Blog  # your blog must have a name for it to show up in the nav bar
 blog_description: Materials for the class I TA and stuff I find interesting
 permalink: /blog/:year/:title/
 
