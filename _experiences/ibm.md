@@ -1,12 +1,12 @@
 ---
 layout: page
 title: IBM Research
-position_name: Incoming Research Intern
+position_name: Research Intern
 permalink: /ibm/
-description: an internship
+description: Summer 2021
 img: /assets/img/ibm.png
-importance: 0.5
-dates: 2021
+importance: 0
+dates: May - Aug 2021
 ---
 
-Test
+Project description coming soon!

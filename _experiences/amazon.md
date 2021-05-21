@@ -1,12 +1,12 @@
 ---
 layout: page
-title: Amazon A9
+title: Amazon
 position_name: Software Engineer Intern
 permalink: /amazon/
-description: an internship
+description: Summer 2019
 img: /assets/img/amazon.png
 importance: 3
 dates: May - Aug 2019
 ---
 
-Test
+Project decription coming soon!
