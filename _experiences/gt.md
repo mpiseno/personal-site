@@ -7,6 +7,7 @@ description: Fall 2019 - Spring 2021
 img: /assets/img/gt.png
 importance: 0.5
 dates: Aug 2019 - May 2021
+public: True
 ---
 
 ## So Neural Networks...

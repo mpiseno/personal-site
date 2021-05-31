@@ -7,6 +7,6 @@ description: Summer 2018 - Fall 2018
 img: /assets/img/gtri.png
 importance: 4
 dates: May - Aug 2018
+public: False
 ---
 
-Project decription coming soon!

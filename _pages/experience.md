@@ -10,6 +10,7 @@ nav: true
 
 {% assign sorted_exp = site.experiences | sort: "importance" %}
 {% for exp in sorted_exp %}
+{% if exp.public %}
 <a href="{{ exp.url | relative_url }}">
     <ol class="explist">
         <li>
@@ -22,6 +23,18 @@ nav: true
         </li>
     </ol>
 </a>
+{% else %}
+<ol class="explist">
+    <li>
+        <h4 class="year">{{exp.dates}}</h4>
+        <img src="{{ exp.img | relative_url }}" alt="project thumbnail">
+        <div class="expinfo">    
+            <div class="exptitle">{{exp.title}}</div>
+            <div class="expdesc">{{exp.position_name}}</div>
+        </div>
+    </li>
+</ol>
+{% endif %}
 {% endfor %}
 
 </div>

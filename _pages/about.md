@@ -24,8 +24,10 @@ I attended the University of Georgia for one year before transferring to Georgia
 
 I work at the intersection of reinforcement learning and robotics. I am interested in developing algorithms that allow robots to interact with both humans and other agents in intelligent ways. More specificically, I am interested in modeling multi-agent systems that can operate and adapt in dynamic real-world (or extraterrestrial) environments.
 
-###### <b>Background and Personal Interests</b>
+<!-- ###### <b>Background and Personal Interests</b>
 
-I grew up in low-income community just south of Atlanta where we lacked many educational opportunities. While in college, I founded [Fractal](https://www.fractalcs.org/), a nonprofit dedicated to promoting CS education in low-income communities.
+I grew up in low-income community just south of Atlanta that had very limited access to many important educational opportunities (e.g. tutoring, CS classes, language classes). Because of this, 
 
-In my free time, I love snowboarding, playing volleyball, and learning languages. I speak Spanish and Chinese (Mandarin) conversationally. 
+While in college, I founded [Fractal](https://www.fractalcs.org/), a nonprofit dedicated to promoting CS education in low-income communities.
+
+In my free time, I love snowboarding, playing volleyball, and learning languages. I speak Spanish and Chinese (Mandarin) conversationally.  -->

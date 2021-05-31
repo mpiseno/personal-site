@@ -7,6 +7,7 @@ description: Summer 2020
 img: /assets/img/dropbox.jpeg
 importance: 1
 dates: May - Aug 2020
+public: True
 ---
 
 <img src="/assets/img/projects/anxiety.png" style="max-width: 100%;">
