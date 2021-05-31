@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<title>Michael  Piseno | blank</title>
+<title>Michael  Piseno | 策略梯度</title>
 <meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
 ">
 
@@ -29,7 +29,7 @@
 <link rel="shortcut icon" href="/assets/img/favicon.png">
 <link rel="stylesheet" href="/assets/css/main.css">
 
-<link rel="canonical" href="/blog/">
+<link rel="canonical" href="/blog/2021/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6/">
 
 <!-- JQuery -->
 <!-- jQuery -->
@@ -159,66 +159,100 @@
     <!-- Content -->
 
     <div class="container mt-5">
-      <div class="post">
+      
 
-  <div class="header-bar">
-    <h1>My Deep Learning Blog</h1>
-    <h2>Topics from CS 7643 and stuff I find interesting</h2>
-  </div>
+<div class="post">
 
+  <header class="post-header">
+    <h1 class="post-title">策略梯度</h1>
+    <p class="post-meta">March 4, 2021</p>
+  </header>
 
-  <ul class="post-list">
-    
-      
-        <li>
-          <h3><a class="post-title" href="/blog/2021/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6/">策略梯度</a></h3>
-          <p class="post-meta">March 4, 2021</p>
-          <p></p>
-        </li>
-      
-    
-      
-        <li>
-          <h3><a class="post-title" href="/blog/2021/softmax-gradient/">Gradient of Softmax Cross-Entropy Loss</a></h3>
-          <p class="post-meta">February 4, 2021</p>
-          <p></p>
-        </li>
-      
-    
-      
-        <li>
-          <h3><a class="post-title" href="/blog/2020/conv-backprop/">Backpropagation in Convolutional Layers</a></h3>
-          <p class="post-meta">December 29, 2020</p>
-          <p></p>
-        </li>
-      
-    
-  </ul>
+  <article class="post-content">
+    <p>最近我想学更多的中文技术题目为了扩大我的中文。我也用中文写这个教程因为我想练习中文。我也希望这会是一个好策略梯度解释。</p>
+
+<h2 id="策略梯度是什么">策略梯度是什么?</h2>
+
+<p>策略梯度是一个最大化期望回报的办法 \(\mathbb{E}_{\tau \sim \pi_{\theta}}[R(\tau)]\)。我们想最大化的目标函数是 \(J(\pi_{\theta}) = \mathbb{E}_{\tau \sim \pi_{\theta}}[R(\tau)]\)。我们计算目标函数后，可以用梯度上升方法。</p>
+
+\[\theta_{k+1} = \theta_{k} + \alpha \nabla J(\pi_{\theta})\rvert_{\theta=\theta_{k}}\]
+
+<p>\(\nabla J(\pi_{\theta})\)叫 “策略梯度”。很多算法用策略梯度，比方说 TRPO, PPO, DDPG, 什么的。现在我们会派生策略梯度。</p>
+
+<h3 id="派生策略梯度">派生策略梯度</h3>
+
+<p>记起一些东西帮助我们派生：</p>
+
+<ol>
+  <li>
+    <p>轨迹的概率 \(\tau\):</p>
+
+\[\begin{align*}
+     P(\tau) &amp;= P(s_0, a_1, s_1, ..., s_T, a_T) \\
+     &amp;= P(s_0)\prod_{t=0}^{T}P(s_{t+1}|s_t, a_t)\pi_{\theta}(a_t|s_t)
+ \end{align*}\]
+  </li>
+  <li>
+    <p>对数导数方法：为一切函数 \(f\)，我们有</p>
+
+\[\nabla_{\theta}f(x) = f(x)\nabla_{\theta}\log f(x)\]
+  </li>
+</ol>
+
+<p>我们会用这些方法派生策略梯度。</p>
+
+\[\begin{align*}
+    \nabla_{\theta}J(\pi_{\theta}) &amp;= \nabla_{\theta} \mathbb{E}_{\tau \sim \pi_{\theta}}[R(\tau)] \\
+    &amp;= \nabla_{\theta} \int_{\tau} P(\tau | \theta) R(\tau) \\
+    &amp;= \int_{\tau} \nabla_{\theta} P(\tau | \theta) R(\tau) \\
+    &amp;= \int_{\tau} P(\tau | \theta) \nabla_{\theta}\log P(\tau | \theta) R(\tau) \quad \text{对数导数方法} \\
+    &amp;= \mathbb{E}_{\tau \sim \pi_{\theta}}[\nabla_{\theta}\log P(\tau | \theta) R(\tau)] \quad \text{期望} \\
+    &amp;= \mathbb{E}_{\tau \sim \pi_{\theta}}[\sum_{t=0}^{T}\nabla_{\theta}\log \pi_{\theta}(a_t|s_t)R(\tau)]
+\end{align*}\]
+
+<p>最后个部分是因为：</p>
+
+\[\begin{align*}
+    \nabla_{\theta}\log P(\tau | \theta) &amp;= \nabla_{\theta}\log P(s_0) + \sum_{t=0}^{T}\bigg(\nabla_{\theta}\log P(s_{t+1} | s_t, a_t) + \nabla_{\theta}\log \pi_{\theta}(a_t | s_t)\bigg) \\
+    &amp;= 0 + \sum_{t=0}^{T}\bigg(0 + \nabla_{\theta}\log \pi_{\theta}(a_t | s_t)\bigg) \\
+    &amp;= \sum_{t=0}^{T}\nabla_{\theta}\log \pi_{\theta}(a_t | s_t)
+\end{align*}\]
+
+<h3 id="估计策略梯度">估计策略梯度</h3>
+
+<p>为了计算策略梯度，我们得收集一群轨迹 \(\mathcal{D}= \{\tau\}_{i=1, ..., N}\)。那可以算预计的策略梯度。</p>
+
+\[\begin{equation}
+    \hat{g} = \frac{1}{|\mathcal{D}|} \sum_{\tau \in \mathcal{D}}\sum_{t=0}^{T} \nabla_{\theta}\log \pi_{\theta}(a_t | s_t)R(\tau)
+\end{equation}\]
+
+<p>然后我们在梯度上升方法里用策略梯度估计。</p>
+
+\[\theta_{k+1} = \theta_{k} + \alpha \hat{g}\]
+
+<h2 id="基准">基准</h2>
+
+<p>一切只依靠状态的函数 \(b(s_t)\) 有一个特定属性。</p>
+
+\[\begin{equation}
+    \mathbb{E}_{a_t,s_t \sim \pi_{\theta}}[\nabla_{\theta}\log \pi_{\theta}(a_t|s_t)b(s_t)] = 0
+\end{equation}\]
+
+<p>用这种方法的函数叫 “基准函数”。选 \(b(s_t) = V^{\pi_{\theta}}(s_t)\) 可能会减少策略梯度估计（\(\hat{g}\)）的方差，提高策略梯度的效率。其他选择可以用优势函数：</p>
+
+\[A^{\pi_{\theta}}(s_t, a_t) = Q^{\pi_{\theta}}(s_t, a_t) - V^{\pi_{\theta}}(s_t)\]
+
+<p>然后，完全的目标函数是：</p>
+
+\[\begin{equation}
+    \nabla_{\theta} J(\pi_{\theta}) = \mathbb{E}_{\tau \sim \pi_{\theta}}\bigg[\sum_{t=0}^{T} \nabla_{\theta}\log \pi_{\theta}(a_t | s_t)b(s_t)\bigg]
+\end{equation}\]
+
+<p>谢谢你们念我的策略梯度解释。我希望我的解释帮助了你们。再见！</p>
+
+  </article>
 
   
-<nav aria-label="Blog page naviation">
-  <ul class="pagination pagination-lg justify-content-center">
-    <li class="page-item disabled">
-      <a class="page-link" href="" tabindex="-1" aria-disabled="">Newer</a>
-    </li>
-    
-      
-        <li class="page-item active"><a class="page-link" href="/blog/index.html" title="blank">1</a></li>
-      
-        <li class="page-item "><a class="page-link" href="/blog/page/2/index.html" title="blank - page 2">2</a></li>
-      
-        <li class="page-item "><a class="page-link" href="/blog/page/3/index.html" title="blank - page 3">3</a></li>
-      
-        <li class="page-item "><a class="page-link" href="/blog/page/4/index.html" title="blank - page 4">4</a></li>
-      
-    
-    <li class="page-item ">
-      <a class="page-link" href="/blog/page/2/">Older</a>
-    </li>
-  </ul>
-</nav>
-
-
 
 </div>
 

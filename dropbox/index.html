@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<title>Michael  Piseno | blank</title>
+<title>Michael  Piseno | Dropbox</title>
 <meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
 ">
 
@@ -29,7 +29,7 @@
 <link rel="shortcut icon" href="/assets/img/favicon.png">
 <link rel="stylesheet" href="/assets/css/main.css">
 
-<link rel="canonical" href="/blog/">
+<link rel="canonical" href="/dropbox/">
 
 <!-- JQuery -->
 <!-- jQuery -->
@@ -94,7 +94,7 @@
           </li>
           
           <!-- Blog -->
-          <li class="nav-item active">
+          <li class="nav-item ">
             <a class="nav-link" href="/blog/">
               blog
               
@@ -161,64 +161,44 @@
     <div class="container mt-5">
       <div class="post">
 
-  <div class="header-bar">
-    <h1>My Deep Learning Blog</h1>
-    <h2>Topics from CS 7643 and stuff I find interesting</h2>
-  </div>
+  <header class="post-header">
+    <h1 class="post-title">Dropbox</h1>
+    <p class="post-description">Summer 2020</p>
+  </header>
+
+  <article>
+    <p><img src="/assets/img/projects/anxiety.png" style="max-width: 100%;" /></p>
+
+<p>If the above image gives you anxiety, then do I have an intern project for you! Summer 2020 I worked at Dropbox, where I developed the ML infrastructure for a chrome extension that helps people keep their tabs organized and less cluttered. Specifically, I created a system on top of the chrome extension that periodically classifies each tab as “junk” (meaning it can be closed) or “not junk”.</p>
+
+<center>
+    <img src="/assets/img/projects/junk-not-junk.png" style="max-width: 70%; padding: 5%" alt="iykyk" />
+</center>
+
+<p>It did this by sending data collected during interaction with the tab to a server where a trained neural network performed the classification then sent the predictions back to the user. Let’s take a deeper dive to see how it works.</p>
+
+<h2 id="ml-for-junk-tab-classification">ML for Junk Tab Classification</h2>
+
+<p>First, I had to construct a training dataset for the ML model by sending real (anonymized) user data about tab usage to a server. This required that I quickly build the infrastructure for logging data and release a version of the chrome extension to our (small at the time) set of users. Of course, this did introduce bias into the data set since our user base was mostly other people at Dropbox, but we can always retrain the model on a larger dataset. Once the dataset was created, it was time to build the actual ML pipeline, which looks like this:</p>
+
+<center>
+    <img src="/assets/img/projects/junk-prediction-system.png" style="max-width: 80%; padding: 5%" alt="iykyk" />
+</center>
+
+<ol>
+  <li>First, every 10 minutes or so, data about each tab is sent to a server. This data includes things like the hashed url, active time spent on each tab, time since the tab was last used, etc.</li>
+  <li>Next, the raw data that was sent to the server in step 1 is preprocessed into feature vectors for the neural network. A separate server is running a process that waits on requests, which contain the feature vectors as a payload, from the first server and gives them to the neural network.</li>
+  <li>Onces the neural network outputs its predictions about each tab, they get routed back to the client (i.e. the user’s browser), where a nice UI tells the user whether or not they have junk tabs.</li>
+</ol>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This project involved a ton of moving parts, and I had to write thousands of lines of code to build the all infrastruture. But other than learning Typescript and how to do ML in a production setting, this project taught me how to manage a project timeline effectively. I had to build the infrstructure to log real user data quickly so that I had time to collect enough data to train the neural network. While the data was being collcted from real users, I had to build the rest of the ML infrastructure, and still make time for HackWeek (a week-long Dropbox internal Hackathon).</p>
+
+<p>Overall interning at Dropbox was an amazing and rewarding experience! The project’s success would not have been possible without my awesome team, especially my phenomenal mentor Tom.</p>
 
 
-  <ul class="post-list">
-    
-      
-        <li>
-          <h3><a class="post-title" href="/blog/2021/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6/">策略梯度</a></h3>
-          <p class="post-meta">March 4, 2021</p>
-          <p></p>
-        </li>
-      
-    
-      
-        <li>
-          <h3><a class="post-title" href="/blog/2021/softmax-gradient/">Gradient of Softmax Cross-Entropy Loss</a></h3>
-          <p class="post-meta">February 4, 2021</p>
-          <p></p>
-        </li>
-      
-    
-      
-        <li>
-          <h3><a class="post-title" href="/blog/2020/conv-backprop/">Backpropagation in Convolutional Layers</a></h3>
-          <p class="post-meta">December 29, 2020</p>
-          <p></p>
-        </li>
-      
-    
-  </ul>
-
-  
-<nav aria-label="Blog page naviation">
-  <ul class="pagination pagination-lg justify-content-center">
-    <li class="page-item disabled">
-      <a class="page-link" href="" tabindex="-1" aria-disabled="">Newer</a>
-    </li>
-    
-      
-        <li class="page-item active"><a class="page-link" href="/blog/index.html" title="blank">1</a></li>
-      
-        <li class="page-item "><a class="page-link" href="/blog/page/2/index.html" title="blank - page 2">2</a></li>
-      
-        <li class="page-item "><a class="page-link" href="/blog/page/3/index.html" title="blank - page 3">3</a></li>
-      
-        <li class="page-item "><a class="page-link" href="/blog/page/4/index.html" title="blank - page 4">4</a></li>
-      
-    
-    <li class="page-item ">
-      <a class="page-link" href="/blog/page/2/">Older</a>
-    </li>
-  </ul>
-</nav>
-
-
+  </article>
 
 </div>
 

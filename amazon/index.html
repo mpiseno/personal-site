@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<title>Michael  Piseno | blank</title>
+<title>Michael  Piseno | Amazon</title>
 <meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
 ">
 
@@ -29,7 +29,7 @@
 <link rel="shortcut icon" href="/assets/img/favicon.png">
 <link rel="stylesheet" href="/assets/css/main.css">
 
-<link rel="canonical" href="/blog/">
+<link rel="canonical" href="/amazon/">
 
 <!-- JQuery -->
 <!-- jQuery -->
@@ -94,7 +94,7 @@
           </li>
           
           <!-- Blog -->
-          <li class="nav-item active">
+          <li class="nav-item ">
             <a class="nav-link" href="/blog/">
               blog
               
@@ -161,64 +161,49 @@
     <div class="container mt-5">
       <div class="post">
 
-  <div class="header-bar">
-    <h1>My Deep Learning Blog</h1>
-    <h2>Topics from CS 7643 and stuff I find interesting</h2>
-  </div>
+  <header class="post-header">
+    <h1 class="post-title">Amazon</h1>
+    <p class="post-description">Summer 2019</p>
+  </header>
+
+  <article>
+    <h2 id="a9-visual-search">A9 Visual Search</h2>
+
+<p>In summer 2019, I worked at A9, a former subsidiary of Amazon that is now part of Amazon. I worked on the Visual Search &amp; Augmented Reality team, where I developed algorithms to detect linear boundaries indoors. This is important for the Amazon shopping app: when a user wants to view a product in their room using the AR feature in the app, it is necessary to determine where certain planes (e.g. the floor and wall) are.</p>
+
+<center>
+    <img src="/assets/img/projects/amazon/view-in-room.gif" style="max-width: 80%; padding: 5%" />
+</center>
+
+<p>While at A9, I developed a method for automatically detecting the boundary between these planes. As AR for shopping becomes more popular, this method will be useful to improve the customers’ shopping experiences so they do not have to manually define that boundary like above.</p>
+
+<h2 id="edge-detection-and-linear-segmentation">Edge Detection and Linear Segmentation</h2>
+
+<p>The method for finding the correct linear boundary between two planes of interest in a room can be broken down into two parts - line detection and line classification.</p>
+
+<ol>
+  <li>Line Detection: The algorithm makes use of the Hough transform along with a few preprocessing methods such as gaussian blurring.</li>
+  <li>Line Classification: After we have found several “candidate lines” from the Hough transform, we pass the image along with candidate lines through a CNN trained to determine whether the candidate lines are the true boundary we care about or not. This relies on a method called linear pooling, in which we pool layer activations along the linear boundaries defined by the candidate lines.</li>
+</ol>
+
+<p>After assigning each candidate line found by the Hough transform a probability of being the correct line, the algorithm predicts the true boundary to be the candidate line with the highest probability.</p>
+
+<center>
+    <img src="/assets/img/projects/amazon/algorithm.png" style="max-width: 90%; padding: 5%" />
+</center>
+
+<h3 id="performance-metrics">Performance Metrics</h3>
+
+<p>Once the algorithm predicts a line for the true boundary, that line segments the image into two regions P and Q that are subsets of the image.</p>
+
+<center>
+    <img src="/assets/img/projects/amazon/segment.png" style="max-width: 70%; padding: 5%" />
+</center>
+
+<p>To evaluate the performance of the model, we use intersection over union (IoU) with varying thresholds compared with the ground truth \(P_{gt}\) and \(Q_{gt}\). We can then define an accuracy measure by assigning predicted lines that produce an IoU score greater than a threshold \(\tau \in [0, 1]\) to be correct.</p>
 
 
-  <ul class="post-list">
-    
-      
-        <li>
-          <h3><a class="post-title" href="/blog/2021/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6/">策略梯度</a></h3>
-          <p class="post-meta">March 4, 2021</p>
-          <p></p>
-        </li>
-      
-    
-      
-        <li>
-          <h3><a class="post-title" href="/blog/2021/softmax-gradient/">Gradient of Softmax Cross-Entropy Loss</a></h3>
-          <p class="post-meta">February 4, 2021</p>
-          <p></p>
-        </li>
-      
-    
-      
-        <li>
-          <h3><a class="post-title" href="/blog/2020/conv-backprop/">Backpropagation in Convolutional Layers</a></h3>
-          <p class="post-meta">December 29, 2020</p>
-          <p></p>
-        </li>
-      
-    
-  </ul>
-
-  
-<nav aria-label="Blog page naviation">
-  <ul class="pagination pagination-lg justify-content-center">
-    <li class="page-item disabled">
-      <a class="page-link" href="" tabindex="-1" aria-disabled="">Newer</a>
-    </li>
-    
-      
-        <li class="page-item active"><a class="page-link" href="/blog/index.html" title="blank">1</a></li>
-      
-        <li class="page-item "><a class="page-link" href="/blog/page/2/index.html" title="blank - page 2">2</a></li>
-      
-        <li class="page-item "><a class="page-link" href="/blog/page/3/index.html" title="blank - page 3">3</a></li>
-      
-        <li class="page-item "><a class="page-link" href="/blog/page/4/index.html" title="blank - page 4">4</a></li>
-      
-    
-    <li class="page-item ">
-      <a class="page-link" href="/blog/page/2/">Older</a>
-    </li>
-  </ul>
-</nav>
-
-
+  </article>
 
 </div>
 

@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<title>Michael  Piseno | blank</title>
+<title>Michael  Piseno | Gradient of Softmax Cross-Entropy Loss</title>
 <meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
 ">
 
@@ -29,7 +29,7 @@
 <link rel="shortcut icon" href="/assets/img/favicon.png">
 <link rel="stylesheet" href="/assets/css/main.css">
 
-<link rel="canonical" href="/blog/">
+<link rel="canonical" href="/blog/2021/softmax-gradient/">
 
 <!-- JQuery -->
 <!-- jQuery -->
@@ -159,66 +159,71 @@
     <!-- Content -->
 
     <div class="container mt-5">
-      <div class="post">
+      
 
-  <div class="header-bar">
-    <h1>My Deep Learning Blog</h1>
-    <h2>Topics from CS 7643 and stuff I find interesting</h2>
-  </div>
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Gradient of Softmax Cross-Entropy Loss</h1>
+    <p class="post-meta">February 4, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <p>There’s been a considerable number of students who have trouble deriving the gradient of the softmax cross-entropy loss function and translating it into code. In this post, I’ll derive it step-by-step so that you all have an easier time translating it to code, but I will not provide code because that’s part of the homework.</p>
+
+<h2 id="notation">Notation</h2>
+
+<p>We will denote the input to the softmax function (i.e. the logits) \(\mathbf{z}\) and the softmax function \(S(\mathbf{z})\) which produces a vector output \(\mathbf{s} = S(\mathbf{z})\). Let there be \(k\) classes so that \(\mathbf{z, s} \in \mathbb{R}^{k}\) and denote the index of the correct class \(c\). Recall that the softmax function produces a probability distribution over the classes. We denote the true distribution of the classes as \(\mathbf{y}\), which is a one-hot vector where index \(c\) is set to 1 (i.e. \(\mathbf{y}_{c} = 1\) and \(\mathbf{y}_{i}\) = 0 for \(i \neq c\)).</p>
+
+<p>Let \(L(\mathbf{s})\) be the cross-entropy loss function defined as</p>
+
+\[L(\mathbf{s}, \mathbf{y}) = -\sum_{i}\mathbf{y}_{i} \log \mathbf{s}_{i}\]
+
+<h2 id="computing-the-gradient">Computing the Gradient</h2>
+
+<p>First let’s simplify the cross-entropy loss function by using the fact that \(\mathbf{y}\) is a one-hot vector.</p>
+
+\[\begin{align*}
+    L(\mathbf{s}, \mathbf{y}) &amp;= -\sum_{i}\mathbf{y}_{i} \log \mathbf{s}_{i} \\
+    &amp;= -\log \mathbf{s}_{c}
+\end{align*}\]
+
+<p>Now we can use the chain rule to note that \(\frac{\partial L}{\partial \mathbf{z}} = \frac{\partial L}{\partial \mathbf{s}_{c}}\frac{\partial \mathbf{s}_{c}}{\partial \mathbf{z}}\). \(\frac{\partial L}{\partial \mathbf{s}_{c}}\) is just \(\frac{-1}{\mathbf{s}_{c}}\). \(\frac{\partial \mathbf{s}_{c}}{\partial \mathbf{z}}\) is slightly more complicated. We will compute it by considering the \(i\)th entry - that is \(\frac{\partial \mathbf{s}_{c}}{\partial \mathbf{z}_{i}}\).</p>
+
+<p>If \(i = c\) then we have</p>
+
+\[\begin{align*}
+    \frac{\partial \mathbf{s}_{c}}{\partial \mathbf{z}_{i}} &amp;= \frac{\partial}{\partial \mathbf{z}_{i}} \frac{e^{\mathbf{z}_{c}}}{\sum_{j}e^{\mathbf{z}_{j}}} \\
+    &amp;= \frac{e^{\mathbf{z}_{c}}\sum_{j}e^{\mathbf{z}_{j}} - e^{\mathbf{z}_{c}}e^{\mathbf{z}_{c}}}{(\sum_{j}e^{\mathbf{z}_{j}})^{2}} \\
+    &amp;= \frac{e^{\mathbf{z}_{c}}}{\sum_{j}e^{\mathbf{z}_{j}}}\frac{\sum_{j}e^{\mathbf{z}_{j}} - e^{\mathbf{z}_{c}}}{\sum_{j}e^{\mathbf{z}_{j}}} \\
+    &amp;= \mathbf{s}_{c}(1 - \mathbf{s}_{c})
+\end{align*}\]
+
+<p>If \(i \neq c\), we get</p>
+
+\[\begin{align*}
+    \frac{\partial \mathbf{s}_{c}}{\partial \mathbf{z}_{i}} &amp;= \frac{\partial}{\partial \mathbf{z}_{i}} \frac{e^{\mathbf{z}_{c}}}{\sum_{j}e^{\mathbf{z}_{j}}} \\
+    &amp;= \frac{-e^{\mathbf{z}_{i}}e^{\mathbf{z}_{c}}}{(\sum_{j}e^{\mathbf{z}_{j}})^{2}} \\
+    &amp;= -\mathbf{s}_{i}\mathbf{s}_{c}
+\end{align*}\]
+
+<p>Now we can return to computing the full gradient \(\frac{\partial L}{\partial \mathbf{z}}\).</p>
+
+\[\begin{align*}
+    \frac{\partial L}{\partial \mathbf{z}} &amp;= \frac{\partial L}{\partial \mathbf{s}_{c}}\frac{\partial \mathbf{s}_{c}}{\partial \mathbf{z}} \\
+    &amp;= \frac{-1}{\mathbf{s}_{c}}
+    \begin{bmatrix} -\mathbf{s}_{1}\mathbf{s}_{c} &amp; -\mathbf{s}_{2}\mathbf{s}_{c} &amp; ... &amp; \mathbf{s}_{c}(1 - \mathbf{s}_{c}) &amp; ... &amp; -\mathbf{s}_{k}\mathbf{s}_{c} \end{bmatrix} \\
+    &amp;= \begin{bmatrix} \mathbf{s}_{1} &amp; \mathbf{s}_{2} &amp; ... &amp; (\mathbf{s}_{c} - 1) &amp; ... &amp; \mathbf{s}_{k} \end{bmatrix}
+\end{align*}\]
+
+<p>So the gradient of the softmax cross-entropy amounts to subtracting 1 from value at the index of the correct class! We also could have computed the full row vector \(\frac{\partial L}{\partial \mathbf{s}}\) and Jacobian matrix \(\frac{\partial \mathbf{s}}{\partial \mathbf{z}}\) and matrix multiplied them. However, the former is sparse, so it simplified the computation a lot to do it how we did above. Furthermore, the method above shows that when computing gradients for backpropagation, we can use the fact that the flow of computation is such that the entries of \(\mathbf{s}\) that are not at the correct class’s index do not contribute to the loss, so we don’t need to consider them.</p>
+
+<p>Hopefully this helped you guys out. Stay positive and test negative y’all.</p>
 
 
-  <ul class="post-list">
-    
-      
-        <li>
-          <h3><a class="post-title" href="/blog/2021/%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6/">策略梯度</a></h3>
-          <p class="post-meta">March 4, 2021</p>
-          <p></p>
-        </li>
-      
-    
-      
-        <li>
-          <h3><a class="post-title" href="/blog/2021/softmax-gradient/">Gradient of Softmax Cross-Entropy Loss</a></h3>
-          <p class="post-meta">February 4, 2021</p>
-          <p></p>
-        </li>
-      
-    
-      
-        <li>
-          <h3><a class="post-title" href="/blog/2020/conv-backprop/">Backpropagation in Convolutional Layers</a></h3>
-          <p class="post-meta">December 29, 2020</p>
-          <p></p>
-        </li>
-      
-    
-  </ul>
+  </article>
 
   
-<nav aria-label="Blog page naviation">
-  <ul class="pagination pagination-lg justify-content-center">
-    <li class="page-item disabled">
-      <a class="page-link" href="" tabindex="-1" aria-disabled="">Newer</a>
-    </li>
-    
-      
-        <li class="page-item active"><a class="page-link" href="/blog/index.html" title="blank">1</a></li>
-      
-        <li class="page-item "><a class="page-link" href="/blog/page/2/index.html" title="blank - page 2">2</a></li>
-      
-        <li class="page-item "><a class="page-link" href="/blog/page/3/index.html" title="blank - page 3">3</a></li>
-      
-        <li class="page-item "><a class="page-link" href="/blog/page/4/index.html" title="blank - page 4">4</a></li>
-      
-    
-    <li class="page-item ">
-      <a class="page-link" href="/blog/page/2/">Older</a>
-    </li>
-  </ul>
-</nav>
-
-
 
 </div>
 
